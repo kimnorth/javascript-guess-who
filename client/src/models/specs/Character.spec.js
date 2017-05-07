@@ -43,6 +43,12 @@ describe('Character', function() {
     it('should have a glasses boolean', function() {
       assert.strictEqual(true, walter.glasses);
     });    
+
+    it('should have a bald boolean', function() {
+      assert.strictEqual(true, walter.bald);
+    });
+
+    
   
   });
 
