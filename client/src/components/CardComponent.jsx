@@ -9,9 +9,7 @@ class CardComponent extends React.Component {
     return (
 
       <div>
-
         <img src={this.props.imageSrc} height="200px" width="150px"  />
-
       </div>
 
     )
