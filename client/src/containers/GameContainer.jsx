@@ -57,7 +57,6 @@ class GameContainer extends React.Component {
     this.shuffleDeck();
     this.shuffleQuestions();
     this.pickRandomCard();
-    console.log(this.state.chosenCharacterCard)
   }
 
   createQuestionsMenu(){
@@ -121,13 +120,23 @@ class GameContainer extends React.Component {
    else {
     this.respondToQuestion(false)
    }
+  }
 
+  addUpGuesses(){
+    this.state.numberOfGuesses += 1;
+    const guessSpace = document.querySelector('#guess-space')
+    guessSpace.innerText = this.state.numberOfGuesses
   }
 
   makeGuess(){
-    console.log("clicked")
+    this.addUpGuesses()
     if (this.state.currentSelectedCharacterCard === this.state.chosenCharacterCard){
       this.state.givenAnswer = "Correct!"
+      const answerSpace = document.querySelector('#answer-space')
+      answerSpace.innerText = this.state.givenAnswer
+    }
+    else {
+      this.state.givenAnswer = "Incorrect!"
       const answerSpace = document.querySelector('#answer-space')
       answerSpace.innerText = this.state.givenAnswer
     }
@@ -181,6 +190,7 @@ class GameContainer extends React.Component {
 
         <div id="answer-div">
           <p>Answer: <span id="answer-space"></span></p>
+          <p>Number of Guesses: <span id="guess-space"></span></p>
         </div>
 
       </div>
