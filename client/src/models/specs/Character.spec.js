@@ -14,7 +14,7 @@ describe('Character', function() {
         false,          // brunette
         true,           // glasses
         true,           // bald
-        true            // tie 
+        false           // tie 
     )
   })
   
@@ -48,7 +48,9 @@ describe('Character', function() {
       assert.strictEqual(true, walter.bald);
     });
 
-    
+    it('should have a tie boolean', function() {
+      assert.strictEqual(false, walter.tie);
+    });
   
   });
 

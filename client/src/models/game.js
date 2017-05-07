@@ -12,7 +12,7 @@ class Game {
         false,          // brunette
         true,           // glasses
         true,           // bald
-        true            // tie 
+        false           // tie 
         ),
       const jesse = new Character(
         "Jesse Pinkman",  // name
@@ -87,7 +87,7 @@ class Game {
     ]
   }  // end of constructor
 
-  
+
 
 }
 
