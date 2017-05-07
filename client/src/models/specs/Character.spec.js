@@ -30,6 +30,10 @@ describe('Character', function() {
 
     it('should have a gender boolean for female', function() {
       assert.strictEqual(false, walter.female);
+    });
+
+    it('should have a blond boolean', function() {
+      assert.strictEqual(false, walter.blond);
     });    
 
 
