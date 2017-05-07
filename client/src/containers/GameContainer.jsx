@@ -7,10 +7,38 @@ class GameContainer extends React.Component {
     super(props)
     this.state = {
       wins: 0,
-      cardsInPlay: [],
+      cardsInPlay: ["Walter White", "Jesse Pinkman", "Skylar White", "Hank Schrader", "Marie Schrader", "Saul Goodman", "Gus Fring", "Mike Ehrmantraut"],
       cardsOutOfPlay: [],
-      numberOfGuesses: 0
+      numberOfGuesses: 0,
+      questionsLeftToAsk: ["Do they wear glasses?", "Are they bald?", "Are they a man?", "Are they wearing a tie?"],
+      questionsAsked: [],
+      currentSelectedQuestion: null
     }
+  }
+
+  createQuestionsMenu(){
+    this.state.questionsLeftToAsk.forEach(function(question, index){
+      var select = document.querySelector('#questions')
+      var option = document.createElement('option')
+      option.innerText = question
+      option.value = index;
+      select.appendChild(option)
+    })
+  }
+
+  createCharactersMenu(){
+    this.state.cardsInPlay.forEach(function(character, index){
+      var select = document.querySelector('#characters')
+      var option = document.createElement('option')
+      option.innerText = character
+      option.value = index
+      select.appendChild(option)
+    })
+  }
+
+  componentDidMount(){
+    this.createQuestionsMenu();
+    this.createCharactersMenu();
   }
 
   render(){
@@ -18,7 +46,7 @@ class GameContainer extends React.Component {
     return (
 
       <div>
-      <h1>Guess Who</h1>
+        <h1>Guess Who</h1>
 
         <div id="scoreboard">
           <p>Wins: {this.state.wins}</p>
@@ -46,10 +74,14 @@ class GameContainer extends React.Component {
         <div className="flex-row">
           <CardComponent id="gus-fring" imageSrc={"https://upload.wikimedia.org/wikipedia/en/7/7b/Gustavo_fring_breaking_bad.jpg"} />
           <CardComponent id="mike-ehrmantraut" imageSrc={"http://cdn4.thr.com/sites/default/files/imagecache/NFE_portrait/2014/01/jonathan_banks.jpg"} />
-
+        </div>
         </div>
 
-        </div>  
+        <select id="questions"></select>
+        <button>Ask</button>
+
+        <select id="characters"></select>
+        <button>Guess</button>
 
       </div>
 
