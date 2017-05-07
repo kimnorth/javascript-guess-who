@@ -3,7 +3,7 @@ import Character from './character.js'
 class Game {
 
   constructor(){
-
+    
   }
 
 }

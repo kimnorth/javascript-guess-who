@@ -9,6 +9,7 @@ class GameContainer extends React.Component {
     this.game = new Game()
     this.state = {
       wins: 0,
+      chosenCharacterCard: null,
       currentSelectedQuestion: null,
       cardsInPlay: [],
       cardsOutOfPlay: [],
@@ -33,27 +34,36 @@ class GameContainer extends React.Component {
 
   shuffleQuestions(){
     this.state.questionsLeftToAsk = [
-        "Do they wear glasses?", 
-        "Are they bald?", 
-        "Are they a man?", 
-        "Are they wearing a tie?",
-        "Are they a woman?",
-        'Are they blond?',
-        'Are they brunette?'
+        { query: "glasses", questionString: "Do they wear glasses?"},
+        { query: "bald", questionString: "Are they bald?" },
+        { query: "man", questionString: "Are they male?" },
+        { query: "woman", questionString: "Are they female?" },
+        { query: "blond", questionString: "Are they blond?" },
+        { query: "brunette", questionString: "Are they brunette?" },
+        { query: "tie", questionString: "Are they wearing a tie?" }
     ]
+    this.state.currentSelectedQuestion = this.state.questionsLeftToAsk[0].questionString
+  }
+
+  pickRandomCard(){
+    const randomNumber = (Math.floor(Math.random() * 8))
+    console.log(randomNumber)
+    this.state.chosenCharacterCard = this.state.cardsInPlay[randomNumber]
   }
 
   componentWillMount(){
     this.shuffleDeck();
     this.shuffleQuestions();
+    this.pickRandomCard();
+    console.log(this.state.chosenCharacterCard)
   }
 
   createQuestionsMenu(){
     this.state.questionsLeftToAsk.forEach(function(question, index){
       var select = document.querySelector('#questions')
       var option = document.createElement('option')
-      option.innerText = question
-      option.value = index;
+      option.innerText = question.questionString
+      option.value = index
       select.appendChild(option)
     })
   }
@@ -71,6 +81,20 @@ class GameContainer extends React.Component {
   componentDidMount(){
     this.createQuestionsMenu();
     this.createCharactersMenu();
+  }
+
+  setCurrentSelectedQuestion(event){
+    const index = event.target.value;
+    this.state.currentSelectedQuestion = this.state.questionsLeftToAsk[index]
+    console.log(this.state.currentSelectedQuestion)
+  }
+
+  askQuestion(){
+    if (this.state.currentSelectedQuestion === null){
+      return
+    }
+    console.log("clicked...")
+
   }
 
   render(){
@@ -110,13 +134,17 @@ class GameContainer extends React.Component {
         </div>
 
         <div id="ask-questions-div">
-            <select id="questions"></select>
-            <button>Ask</button>
+            <select onChange={this.setCurrentSelectedQuestion.bind(this)} id="questions"></select>
+            <button onClick={this.askQuestion.bind(this)}>Ask</button>
         </div>
 
         <div id="make-guesses-div">
           <select id="characters"></select>
           <button>Guess</button>
+        </div>
+
+        <div id="answer-div">
+          <p>Answer: </p>
         </div>
 
       </div>
