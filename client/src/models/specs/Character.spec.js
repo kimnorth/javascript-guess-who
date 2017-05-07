@@ -24,9 +24,15 @@ describe('Character', function() {
       assert.strictEqual("Walter White", walter.name);
     });
 
-    it('should have a gender boolean', function() {
+    it('should have a gender boolean for male', function() {
       assert.strictEqual(true, walter.male);
     });    
+
+    it('should have a gender boolean for female', function() {
+      assert.strictEqual(false, walter.female);
+    });    
+
+
   
   });
 
