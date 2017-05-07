@@ -11,6 +11,7 @@ class GameContainer extends React.Component {
       wins: 0,
       chosenCharacterCard: null,
       currentSelectedQuestion: null,
+      currentSelectedCharacterCard: null,
       cardsInPlay: [],
       cardsOutOfPlay: [],
       numberOfGuesses: 0,
@@ -90,6 +91,12 @@ class GameContainer extends React.Component {
     console.log(this.state.currentSelectedQuestion)
   }
 
+  setCurrentSelectedCharacter(event){
+    console.log(event.target.value)
+    this.state.currentSelectedCharacterCard = this.state.cardsInPlay[event.target.value]
+    console.log(this.state.currentSelectedCharacterCard)
+  }
+
   respondToQuestion(boolean){
     if (boolean){
       this.state.givenAnswer = "Yes!"
@@ -109,19 +116,22 @@ class GameContainer extends React.Component {
    console.log(question)
    console.log(this.state.chosenCharacterCard)
    if (this.state.chosenCharacterCard[question]){
-    console.log("They have this")
     this.respondToQuestion(true)
    }
    else {
-    console.log("They don't have this")
     this.respondToQuestion(false)
    }
 
   }
 
-
-
-
+  makeGuess(){
+    console.log("clicked")
+    if (this.state.currentSelectedCharacterCard === this.state.chosenCharacterCard){
+      this.state.givenAnswer = "Correct!"
+      const answerSpace = document.querySelector('#answer-space')
+      answerSpace.innerText = this.state.givenAnswer
+    }
+  }
 
   render(){
 
@@ -165,8 +175,8 @@ class GameContainer extends React.Component {
         </div>
 
         <div id="make-guesses-div">
-          <select id="characters"></select>
-          <button>Guess</button>
+          <select onChange={this.setCurrentSelectedCharacter.bind(this)} id="characters"></select>
+          <button onClick={this.makeGuess.bind(this)}>Guess</button>
         </div>
 
         <div id="answer-div">
