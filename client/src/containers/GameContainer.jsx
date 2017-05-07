@@ -15,7 +15,8 @@ class GameContainer extends React.Component {
       cardsOutOfPlay: [],
       numberOfGuesses: 0,
       questionsLeftToAsk: [],
-      questionsAsked: []
+      questionsAsked: [],
+      givenAnswer: ""
     }
   }
 
@@ -47,8 +48,8 @@ class GameContainer extends React.Component {
 
   pickRandomCard(){
     const randomNumber = (Math.floor(Math.random() * 8))
-    console.log(randomNumber)
     this.state.chosenCharacterCard = this.state.cardsInPlay[randomNumber]
+    console.log("Chosen card is", this.state.chosenCharacterCard.name)
   }
 
   componentWillMount(){
@@ -89,13 +90,38 @@ class GameContainer extends React.Component {
     console.log(this.state.currentSelectedQuestion)
   }
 
-  askQuestion(){
-    if (this.state.currentSelectedQuestion === null){
-      return
+  respondToQuestion(boolean){
+    if (boolean){
+      this.state.givenAnswer = "Yes!"
+      const answerSpace = document.querySelector('#answer-space')
+      answerSpace.innerText = this.state.givenAnswer
     }
-    console.log("clicked...")
+    else if (!boolean){
+      this.state.givenAnswer = "No!"
+      const answerSpace = document.querySelector('#answer-space')
+      answerSpace.innerText = this.state.givenAnswer
+    }
+    console.log(this.state.givenAnswer)
+  }
+
+  askQuestion(){
+   const question = this.state.currentSelectedQuestion.query;
+   console.log(question)
+   console.log(this.state.chosenCharacterCard)
+   if (this.state.chosenCharacterCard[question]){
+    console.log("They have this")
+    this.respondToQuestion(true)
+   }
+   else {
+    console.log("They don't have this")
+    this.respondToQuestion(false)
+   }
 
   }
+
+
+
+
 
   render(){
 
@@ -144,7 +170,7 @@ class GameContainer extends React.Component {
         </div>
 
         <div id="answer-div">
-          <p>Answer: </p>
+          <p>Answer: <span id="answer-space"></span></p>
         </div>
 
       </div>
