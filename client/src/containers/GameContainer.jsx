@@ -1,19 +1,51 @@
-import React from 'react';
+import React from 'react'
+import Game from '../models/game.js'
 import CardComponent from '../components/CardComponent'
 
 class GameContainer extends React.Component {
 
   constructor(props){
     super(props)
+    this.game = new Game()
     this.state = {
       wins: 0,
-      cardsInPlay: ["Walter White", "Jesse Pinkman", "Skylar White", "Hank Schrader", "Marie Schrader", "Saul Goodman", "Gus Fring", "Mike Ehrmantraut"],
+      currentSelectedQuestion: null,
+      cardsInPlay: [],
       cardsOutOfPlay: [],
       numberOfGuesses: 0,
-      questionsLeftToAsk: ["Do they wear glasses?", "Are they bald?", "Are they a man?", "Are they wearing a tie?"],
-      questionsAsked: [],
-      currentSelectedQuestion: null
+      questionsLeftToAsk: [],
+      questionsAsked: []
     }
+  }
+
+  shuffleDeck(){
+    this.state.cardsInPlay = [
+      { name: "Walter White", male: true, female: false, blond: false, brunette: false, glasses: false, bald: true, tie: false },
+      { name: "Jesse Pinkman", male: true, female: false, blond: true, brunette: false, glasses: false, bald: false, tie: false},
+      { name: "Skylar White", male: false, female: true, blond: true, brunette: false, glasses: false, bald: false, tie: false},
+      { name: "Hank Schrader", male: true, female: false, blond: false, brunette: false, glasses: false, bald: true, tie: false},
+      { name: "Marie Schrader", male: false, female: true, blond: false, brunette: true, glasses: false, bald: false, tie: false},
+      { name: "Saul Goodman", male: true, female: false, blond: false, brunette: true, glasses: false, bald: false, tie: true},
+      { name: "Gus Fring", male: true, female: false, blond: false, brunette: true, glasses: true, bald: false, tie: true},
+      { name: "Mike Ehrmantraut", male: true, female: false, blond: false, brunette: false, glasses: false, bald: true, tie: false},
+    ]
+  }
+
+  shuffleQuestions(){
+    this.state.questionsLeftToAsk = [
+        "Do they wear glasses?", 
+        "Are they bald?", 
+        "Are they a man?", 
+        "Are they wearing a tie?",
+        "Are they a woman?",
+        'Are they blond?',
+        'Are they brunette?'
+    ]
+  }
+
+  componentWillMount(){
+    this.shuffleDeck();
+    this.shuffleQuestions();
   }
 
   createQuestionsMenu(){
@@ -30,7 +62,7 @@ class GameContainer extends React.Component {
     this.state.cardsInPlay.forEach(function(character, index){
       var select = document.querySelector('#characters')
       var option = document.createElement('option')
-      option.innerText = character
+      option.innerText = character.name
       option.value = index
       select.appendChild(option)
     })
@@ -77,11 +109,15 @@ class GameContainer extends React.Component {
         </div>
         </div>
 
-        <select id="questions"></select>
-        <button>Ask</button>
+        <div id="ask-questions-div">
+            <select id="questions"></select>
+            <button>Ask</button>
+        </div>
 
-        <select id="characters"></select>
-        <button>Guess</button>
+        <div id="make-guesses-div">
+          <select id="characters"></select>
+          <button>Guess</button>
+        </div>
 
       </div>
 

@@ -1,4 +1,6 @@
-var Character = function(name, male, female, blond, brunette, glasses, bald, tie){
+class Character {
+
+  constructor(name, male, female, blond, brunette, glasses, bald, tie){
     this.name = name;             // string
     this.male = male;             // boolean
     this.female = female;         // boolean 
@@ -7,6 +9,7 @@ var Character = function(name, male, female, blond, brunette, glasses, bald, tie
     this.glasses = glasses;       // boolean
     this.bald = bald;             // boolean
     this.tie = tie;               // boolean
+  }
 }
 
-module.exports = Character;
+export default Character;
